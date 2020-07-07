@@ -1,0 +1,72 @@
+C51 COMPILER V9.60.0.0   LCD1602                                                           07/07/2020 16:44:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN .\Objects\LCD1602.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE LCD1602.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\L
+                    -CD1602.lst) OBJECT(.\Objects\LCD1602.obj)
+
+line level    source
+
+   1          #include "LCD1602.h"
+   2          
+   3          void LCD1602_Init(void){
+   4   1          P0M0 = 0; P0M1 = 0;
+   5   1          P1M0 = 0; P1M1 = 0;
+   6   1          P6M0 = 0; P6M1 = 0;
+   7   1          delay_ms(15);
+   8   1          LCD1602_Write(0x38, 0);
+   9   1          delay_ms(5);
+  10   1          LCD1602_Write(0x38, 0);
+  11   1          LCD1602_Write(0x08, 0);
+  12   1          LCD1602_Write(0x01, 0);
+  13   1          delay_ms(2);           //ÇåÆÁÐèÒª1.64ms
+  14   1          LCD1602_Write(0x06, 0);
+  15   1          LCD1602_Write(0x0c, 0);
+  16   1      }
+  17          
+  18          /*
+  19              P05 -- RS 
+  20              P06 -- RW
+  21              P07 -- E
+  22              DB0~DB3 -- P60~P63
+  23              DB4~DB7 -- P12~P15
+  24          */
+  25          void LCD1602_Write(unsigned char cmd, char IsData){
+  26   1          P05 = IsData;
+  27   1          P06 = 0;
+  28   1          P07 = 0;
+  29   1          
+  30   1          P60 = cmd;
+  31   1          P61 = cmd >> 1;
+  32   1          P62 = cmd >> 2;
+  33   1          P63 = cmd >> 3;
+  34   1          P12 = cmd >> 4;
+  35   1          P13 = cmd >> 5;
+  36   1          P14 = cmd >> 6;
+  37   1          P15 = cmd >> 7;
+  38   1          
+  39   1          delay_us(1);
+  40   1          
+  41   1          P07 = 1;
+  42   1          delay_us(1);
+  43   1          
+  44   1          P07 = 0;
+  45   1          delay_us(1);
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    167    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.60.0.0   LCD1602                                                           07/07/2020 16:44:38 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

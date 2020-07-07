@@ -1,0 +1,102 @@
+C51 COMPILER V9.60.0.0   FM25CL64                                                          07/07/2020 16:44:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE FM25CL64
+OBJECT MODULE PLACED IN .\Objects\FM25CL64.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE FM25CL64.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -FM25CL64.lst) OBJECT(.\Objects\FM25CL64.obj)
+
+line level    source
+
+   1          #include "FM25CL64.h"
+   2          
+   3          #define SCK P74
+   4          #define SI P76
+   5          #define SO P77
+   6          #define CS P45
+   7          
+   8          #define WREN  0x06
+   9          #define READ  0x03
+  10          #define WRITE 0x02
+  11          
+  12          void FM25CL64_Init(void){
+  13   1          P7M0 = 0; P7M1 = 0;
+  14   1          P4M0 = 0; P4M1 = 0;
+  15   1          
+  16   1          SCK = 0;
+  17   1          CS = 1;
+  18   1      }
+  19          
+  20          void SPIWriteData(unsigned char Data, unsigned int add){
+  21   1          CS = 0;
+  22   1          delay_us(1);
+  23   1          SendData(WREN);     //设置写使能
+  24   1          CS = 1;
+  25   1          delay_us(1);
+  26   1          CS = 0;
+  27   1          delay_us(1);
+  28   1          SendData(WRITE);    //发送写命令
+  29   1          SendData(add >> 8); //发送高八位地址
+  30   1          SendData(add);      //发送低八位地址   
+  31   1          SendData(Data);     //发送数据
+  32   1          CS = 1;
+  33   1          delay_us(1);
+  34   1      }
+  35          
+  36          unsigned char SPIReadData(unsigned int add){
+  37   1          unsigned char ReturnData;
+  38   1          CS = 0;
+  39   1          delay_us(1);
+  40   1          SendData(READ);              //发送读命令
+  41   1          SendData(add >> 8);          //发送高八位地址
+  42   1          SendData(add);               //发送低八位地址   
+  43   1          ReturnData = ReadData();     //接收数据
+  44   1          CS = 1;
+  45   1          delay_us(1);
+  46   1          return ReturnData;
+  47   1      }
+  48          
+  49          void SendData(unsigned char Data){
+  50   1          char i;
+  51   1          SCK = 0;
+  52   1          for(i = 7; i>=0; i--){
+  53   2              SI = Data >> i;
+  54   2              nop();
+C51 COMPILER V9.60.0.0   FM25CL64                                                          07/07/2020 16:44:38 PAGE 2   
+
+*** WARNING C206 IN LINE 54 OF FM25CL64.c: 'nop': missing function-prototype
+  55   2              SCK = 1;
+  56   2              nop();
+  57   2              SCK = 0;
+  58   2          }
+  59   1      }
+  60          
+  61          unsigned char ReadData(void){
+  62   1          unsigned char Data;
+  63   1          char i;
+  64   1          for(i = 7; i>=0; i--){
+  65   2              while(!SCK);
+  66   2              nop();
+  67   2              if(SO == 0){
+  68   3                  Data &= ~(1 << i);
+  69   3              }
+  70   2              else{
+  71   3                  Data |=  (1 << i);
+  72   3              }
+  73   2          }
+  74   1          return Data;
+  75   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    231    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

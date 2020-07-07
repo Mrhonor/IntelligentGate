@@ -1,0 +1,12 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\RFID.obj",
+".\Objects\KeyBoard.obj",
+".\Objects\LCD1602.obj",
+".\Objects\PCF8563.obj",
+".\Objects\Photoelectric.obj",
+".\Objects\Buzzer.obj",
+".\Objects\DHT11.obj",
+".\Objects\FM25CL64.obj" 
+TO ".\Objects\IntelligentGate" 
+PRINT(".\Listings\IntelligentGate.m51") RAMSIZE(256) 

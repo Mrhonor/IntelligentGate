@@ -1,0 +1,160 @@
+C51 COMPILER V9.60.0.0   PCF8563                                                           07/07/2020 16:44:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PCF8563
+OBJECT MODULE PLACED IN .\Objects\PCF8563.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE PCF8563.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\P
+                    -CF8563.lst) OBJECT(.\Objects\PCF8563.obj)
+
+line level    source
+
+   1          #include "PCF8563.h"
+   2          
+   3          // P70 -- SCL  P71 -- SDA
+   4          #define SDA P71
+   5          #define SCL P70
+   6          
+   7          void PCF_Init(void){
+   8   1          P7M0 = 0; P7M1 = 0;
+   9   1          //启动PCF8563
+  10   1          IICWriteData(PCF8563_WRITE_ADD, 0x00, 0x00);
+  11   1      }
+  12          
+  13          //等待应答
+  14          char WaitForAcknowledgement(void){
+  15   1          SDA = 1;
+  16   1          delay_us(1);             
+  17   1          SCL = 1;
+  18   1          delay_us(1);
+  19   1          if(SDA)
+  20   1          { 
+  21   2             StopIIC();
+  22   2             return 0;
+  23   2          }
+  24   1          SCL = 0;
+  25   1          delay_us(2);
+  26   1          return 1;
+  27   1      }
+  28          
+  29          //起始信号
+  30          void StartIIC(void){
+  31   1          SCL = 1;
+  32   1          delay_us(1);
+  33   1          SDA = 1;
+  34   1          delay_us(1);
+  35   1          SDA = 0;
+  36   1          delay_us(1);
+  37   1      }
+  38          
+  39          //终止信号
+  40          void StopIIC(void){
+  41   1          SCL = 0;
+  42   1          delay_us(2);
+  43   1          SDA = 0;
+  44   1          delay_us(1);
+  45   1          SCL = 1;
+  46   1          delay_us(1);
+  47   1          SDA = 1;
+  48   1          delay_us(1);
+  49   1      }
+  50          
+  51          //发送一个bit
+  52          void SendBit(unsigned char bitValue){
+  53   1          SCL = 0;
+  54   1          delay_us(2);
+C51 COMPILER V9.60.0.0   PCF8563                                                           07/07/2020 16:44:38 PAGE 2   
+
+  55   1          SDA = bitValue;
+  56   1          delay_us(1);
+  57   1          SCL = 1;
+  58   1          delay_us(1);
+  59   1          SCL = 0;
+  60   1          delay_us(2);
+  61   1      }
+  62          
+  63          void IICWriteData(unsigned char SlaveAdd, unsigned char Add, unsigned char Data){
+  64   1          unsigned char i;
+  65   1          StartIIC();
+  66   1      
+  67   1          for(i = 0; i < 8; i++){
+  68   2              SendBit(SlaveAdd >> i);
+  69   2          }
+  70   1          SendBit(0); //读写位
+  71   1          
+  72   1          if(!WaitForAcknowledgement()) return; //未收到应答结束通信
+  73   1          
+  74   1          for(i = 0; i < 8; i++){
+  75   2              SendBit(Add >> i);
+  76   2          }
+  77   1          
+  78   1          if(!WaitForAcknowledgement()) return; //未收到应答结束通信
+  79   1          
+  80   1          for(i = 0; i < 8; i++){
+  81   2              SendBit(Data >> i);
+  82   2          }
+  83   1            
+  84   1          if(!WaitForAcknowledgement()) return; //未收到应答结束通信
+  85   1          
+  86   1          StopIIC();
+  87   1      }
+  88          
+  89          char IICWriteAndReadData(unsigned char SlaveWriteAdd, unsigned char Add, unsigned char SlaveReadAdd){
+  90   1          unsigned char i;
+  91   1          unsigned char Data = 0;
+  92   1      
+  93   1          StartIIC();
+  94   1          
+  95   1          for(i = 0; i < 8; i++){
+  96   2              SendBit(SlaveWriteAdd >> i);
+  97   2          }
+  98   1          SendBit(0); //读写位
+  99   1          
+ 100   1          if(!WaitForAcknowledgement()) return -1; //未收到应答结束通信
+ 101   1          
+ 102   1          for(i = 0; i < 8; i++){
+ 103   2              SendBit(Add >> i);
+ 104   2          }
+ 105   1          
+ 106   1          if(!WaitForAcknowledgement()) return -1; //未收到应答结束通信
+ 107   1          
+ 108   1          StartIIC();
+ 109   1          for(i = 0; i < 8; i++){
+ 110   2              SendBit(SlaveReadAdd >> i);
+ 111   2          }
+ 112   1          SendBit(1); //读写位
+ 113   1          
+ 114   1          if(!WaitForAcknowledgement()) return -1; //未收到应答结束通信
+ 115   1          
+ 116   1      
+C51 COMPILER V9.60.0.0   PCF8563                                                           07/07/2020 16:44:38 PAGE 3   
+
+ 117   1          
+ 118   1          while(SCL){
+ 119   2              Data = Data | ((SDA && 0xFF) << i);
+ 120   2              i++;
+ 121   2          }
+ 122   1          
+ 123   1          StopIIC();
+ 124   1      
+ 125   1          return BCDtoData(Data);
+ 126   1      }
+ 127          
+ 128          char BCDtoData(unsigned char Data){
+ 129   1          // BCD码转二进制
+ 130   1          return 0;
+ 131   1      }
+*** WARNING C280 IN LINE 128 OF PCF8563.c: 'Data': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    470    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

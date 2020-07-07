@@ -1,0 +1,59 @@
+C51 COMPILER V9.60.0.0   BUZZER                                                            07/07/2020 16:44:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BUZZER
+OBJECT MODULE PLACED IN .\Objects\Buzzer.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE Buzzer.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Bu
+                    -zzer.lst) OBJECT(.\Objects\Buzzer.obj)
+
+line level    source
+
+   1          #include "Buzzer.h"
+   2          #define FOSC 18432000L
+   3          
+   4          #define ONEMS (65536 - FOSC/12000)
+   5          
+   6          static volatile unsigned int CountTime = 0;
+   7          
+   8          void Buzzer_Init(void){
+   9   1          P5M0 = 0; P5M1 = 0;
+  10   1          P52 = 0;
+  11   1          
+  12   1          //定时器初始化
+  13   1          TR0 = 0; 
+  14   1          AUXR &= 0x7f;  //选用定时器0为12T模式
+  15   1          TMOD &= 0xF0;   //设置定时器0为模式0
+  16   1          ET0 = 1;
+  17   1          EA = 1;
+  18   1          TH0 = ONEMS >> 8;
+  19   1          TL0 = ONEMS;
+  20   1      }
+  21          
+  22          void RingTheBuzzer(unsigned int ms){
+  23   1          TR0 = 1; //开始计数
+  24   1          CountTime = ms;
+  25   1          P52 = 1;
+  26   1      }
+  27          
+  28          void TIM0_interrupt(void) interrupt 1
+  29          {
+  30   1          if(--CountTime == 0){
+  31   2              TR0 = 0;
+  32   2              P52 = 0;
+  33   2          }
+  34   1      }    
+  35          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     68    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
