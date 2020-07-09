@@ -15,16 +15,15 @@ void KeyBoard_Init(void){
     IT1 = 1;    //INT1 下降沿中断
     EX1 = 1;    //INT1 Enable
     EA = 1;     //允许总中断
-    
 }
 
 void INT1_interrupt(void) interrupt 2
 {
+    //唤醒LCD屏幕
+    if(!KeyBoardCheckFlag)  LCD1602_Init();
+
     //开始检测键盘
     KeyBoardCheckFlag = 1;
-    
-    //唤醒LCD屏幕
-    LCD1602_Init();
     
     //使能RFID射频
     P67 = 1; 
@@ -87,7 +86,6 @@ void PasswordCheck(char* Password, char num){
         LCD1602_Write(Welcome[index], 1);
     }
     
-    
     // 调用开门程序
-    
+    OpenDoor();
 }

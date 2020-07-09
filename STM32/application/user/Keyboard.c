@@ -52,10 +52,6 @@ void KeyBoard_Configuration(){
     
     //默认输出低电平
     GPIOD->BSRRL = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
-    
-    
-
-    
 }
 /*
 void EXTI15_10_IRQHandler(void){

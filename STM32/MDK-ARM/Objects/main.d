@@ -30,7 +30,9 @@
 .\objects\main.o: ..\application\user\KeyBoard.h
 .\objects\main.o: ..\application\user\LCD1602.h
 .\objects\main.o: ..\application\user\PCF8563.h
+.\objects\main.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\main.o: ..\application\user\Photoelectric.h
 .\objects\main.o: ..\application\user\Buzzer.h
 .\objects\main.o: ..\application\user\FM25CL64.h
+.\objects\main.o: ..\library\st\stm32f4xx_spi.h
 .\objects\main.o: ..\application\user\DHT11.h

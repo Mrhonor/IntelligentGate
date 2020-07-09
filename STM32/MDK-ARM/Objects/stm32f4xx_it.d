@@ -31,7 +31,9 @@
 .\objects\stm32f4xx_it.o: ..\application\user\KeyBoard.h
 .\objects\stm32f4xx_it.o: ..\application\user\LCD1602.h
 .\objects\stm32f4xx_it.o: ..\application\user\PCF8563.h
+.\objects\stm32f4xx_it.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\stm32f4xx_it.o: ..\application\user\Photoelectric.h
 .\objects\stm32f4xx_it.o: ..\application\user\Buzzer.h
 .\objects\stm32f4xx_it.o: ..\application\user\FM25CL64.h
+.\objects\stm32f4xx_it.o: ..\library\st\stm32f4xx_spi.h
 .\objects\stm32f4xx_it.o: ..\application\user\DHT11.h

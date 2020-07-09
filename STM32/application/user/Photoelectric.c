@@ -29,7 +29,7 @@ void Photoelectric_Configuration(){
     
     exti.EXTI_Line    = EXTI_Line0;
     exti.EXTI_Mode    = EXTI_Mode_Interrupt;
-    exti.EXTI_Trigger = EXTI_Trigger_Rising; //选择上升沿触发
+    exti.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //选择上升沿和下降沿都触发
     exti.EXTI_LineCmd = ENABLE;
     EXTI_Init(&exti);
  

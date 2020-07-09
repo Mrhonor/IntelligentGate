@@ -36,9 +36,9 @@ void UART1_interrupt() interrupt 4
     {
         RX1_Buffer[RX1_Cnt] = SBUF;
         RI = 0;
-        if(++RX1_Cnt >= UART1_BUF_LENGTH){
+        if(++RX1_Cnt >= UART1_BUF_LENGTH){  //»º³åÇøÂú
             RX1_Cnt = 0;
-            RFID_Check(RX1_Buffer);
+            RFID_Check(RX1_Buffer);         //Ð£Ñé
         }
     }
 }

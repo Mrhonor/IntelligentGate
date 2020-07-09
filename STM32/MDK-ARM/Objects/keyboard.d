@@ -31,7 +31,9 @@
 .\objects\keyboard.o: ..\application\user\KeyBoard.h
 .\objects\keyboard.o: ..\application\user\LCD1602.h
 .\objects\keyboard.o: ..\application\user\PCF8563.h
+.\objects\keyboard.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\keyboard.o: ..\application\user\Photoelectric.h
 .\objects\keyboard.o: ..\application\user\Buzzer.h
 .\objects\keyboard.o: ..\application\user\FM25CL64.h
+.\objects\keyboard.o: ..\library\st\stm32f4xx_spi.h
 .\objects\keyboard.o: ..\application\user\DHT11.h

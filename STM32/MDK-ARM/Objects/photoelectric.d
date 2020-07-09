@@ -31,7 +31,9 @@
 .\objects\photoelectric.o: ..\application\user\KeyBoard.h
 .\objects\photoelectric.o: ..\application\user\LCD1602.h
 .\objects\photoelectric.o: ..\application\user\PCF8563.h
+.\objects\photoelectric.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\photoelectric.o: ..\application\user\Photoelectric.h
 .\objects\photoelectric.o: ..\application\user\Buzzer.h
 .\objects\photoelectric.o: ..\application\user\FM25CL64.h
+.\objects\photoelectric.o: ..\library\st\stm32f4xx_spi.h
 .\objects\photoelectric.o: ..\application\user\DHT11.h

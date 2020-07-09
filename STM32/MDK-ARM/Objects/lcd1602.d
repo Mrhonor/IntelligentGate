@@ -31,7 +31,9 @@
 .\objects\lcd1602.o: ..\application\user\KeyBoard.h
 .\objects\lcd1602.o: ..\application\user\LCD1602.h
 .\objects\lcd1602.o: ..\application\user\PCF8563.h
+.\objects\lcd1602.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\lcd1602.o: ..\application\user\Photoelectric.h
 .\objects\lcd1602.o: ..\application\user\Buzzer.h
 .\objects\lcd1602.o: ..\application\user\FM25CL64.h
+.\objects\lcd1602.o: ..\library\st\stm32f4xx_spi.h
 .\objects\lcd1602.o: ..\application\user\DHT11.h

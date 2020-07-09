@@ -34,4 +34,6 @@
 .\objects\pcf8563.o: ..\application\user\Photoelectric.h
 .\objects\pcf8563.o: ..\application\user\Buzzer.h
 .\objects\pcf8563.o: ..\application\user\FM25CL64.h
+.\objects\pcf8563.o: ..\library\st\stm32f4xx_spi.h
 .\objects\pcf8563.o: ..\application\user\DHT11.h
+.\objects\pcf8563.o: ..\library\st\stm32f4xx_i2c.h

@@ -31,7 +31,9 @@
 .\objects\usart1.o: ..\application\user\main.h
 .\objects\usart1.o: ..\application\user\LCD1602.h
 .\objects\usart1.o: ..\application\user\PCF8563.h
+.\objects\usart1.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\usart1.o: ..\application\user\Photoelectric.h
 .\objects\usart1.o: ..\application\user\Buzzer.h
 .\objects\usart1.o: ..\application\user\FM25CL64.h
+.\objects\usart1.o: ..\library\st\stm32f4xx_spi.h
 .\objects\usart1.o: ..\application\user\DHT11.h

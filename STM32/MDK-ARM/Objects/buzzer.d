@@ -31,7 +31,9 @@
 .\objects\buzzer.o: ..\application\user\KeyBoard.h
 .\objects\buzzer.o: ..\application\user\LCD1602.h
 .\objects\buzzer.o: ..\application\user\PCF8563.h
+.\objects\buzzer.o: ..\library\st\stm32f4xx_i2c.h
 .\objects\buzzer.o: ..\application\user\Photoelectric.h
 .\objects\buzzer.o: ..\application\user\Buzzer.h
 .\objects\buzzer.o: ..\application\user\FM25CL64.h
+.\objects\buzzer.o: ..\library\st\stm32f4xx_spi.h
 .\objects\buzzer.o: ..\application\user\DHT11.h

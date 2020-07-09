@@ -39,13 +39,13 @@ void StartIIC(void){
 //终止信号
 void StopIIC(void){
     SCL = 0;
-    delay_us(2);
+    delay_us(2);  //根据时序参数拉低电平要持续1.3μs
     SDA = 0;
     delay_us(1);
     SCL = 1;
     delay_us(1);
     SDA = 1;
-    delay_us(1);
+    delay_us(4); //停止信号至少要保持4μs
 }
 
 //发送一个bit
@@ -64,7 +64,7 @@ void IICWriteData(unsigned char SlaveAdd, unsigned char Add, unsigned char Data)
     unsigned char i;
     StartIIC();
 
-    for(i = 0; i < 8; i++){
+    for(i = 0; i < 7; i++){
         SendBit(SlaveAdd >> i);
     }
     SendBit(0); //读写位
@@ -92,7 +92,7 @@ char IICWriteAndReadData(unsigned char SlaveWriteAdd, unsigned char Add, unsigne
 
     StartIIC();
     
-    for(i = 0; i < 8; i++){
+    for(i = 0; i < 7; i++){
         SendBit(SlaveWriteAdd >> i);
     }
     SendBit(0); //读写位
@@ -106,7 +106,7 @@ char IICWriteAndReadData(unsigned char SlaveWriteAdd, unsigned char Add, unsigne
     if(!WaitForAcknowledgement()) return -1; //未收到应答结束通信
     
     StartIIC();
-    for(i = 0; i < 8; i++){
+    for(i = 0; i < 7; i++){
         SendBit(SlaveReadAdd >> i);
     }
     SendBit(1); //读写位
