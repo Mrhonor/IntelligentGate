@@ -4,11 +4,11 @@ void FM25CL64_Configuration(){
     GPIO_InitTypeDef  gpio;
     SPI_InitTypeDef   spi;
     
-    //Ê±ÖÓÊ¹ÄÜ
+    //æ—¶é’Ÿä½¿èƒ½
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,  ENABLE); 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
     
-    //Òı½Å¸´ÓÃÉèÖÃ
+    //å¼•è„šå¤ç”¨é…ç½®
     GPIO_PinAFConfig(GPIOB, GPIO_Pin_8,  GPIO_AF_SPI2);
     GPIO_PinAFConfig(GPIOB, GPIO_Pin_9,  GPIO_AF_SPI2);
     GPIO_PinAFConfig(GPIOB, GPIO_Pin_14, GPIO_AF_SPI2);
@@ -22,19 +22,20 @@ void FM25CL64_Configuration(){
     gpio.GPIO_OType                      =   GPIO_OType_PP;
     GPIO_Init(GPIOB, &gpio);
     
-    //CSÒı½ÅÊä³ö¸ßµçÆ½
+    //CSå€¼é«˜ç”µå¹³ï¼ŒSCKç½®ä½ç”µå¹³
     GPIOB->BSRRH = GPIO_Pin_9;
-    
-    //Ñ¡ÓÃspiÄ£Ê½0
+    GPIOB->BSRRL = GPIO_Pin_8;
+
+    //SPIæ¨¡å¼0
     spi.SPI_CPHA = SPI_CPHA_1Edge;
     spi.SPI_CPOL = SPI_CPOL_Low;
     spi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
     spi.SPI_NSS = SPI_NSS_Soft;
     spi.SPI_Mode = SPI_Mode_Master;
-    spi.SPI_Direction = SPI_Direction_2Lines_FullDuplex; //Ë«ÏßË«ÏòÈ«Ë«¹¤
-    spi.SPI_FirstBit = SPI_FirstBit_MSB; //Êı¾İ´«Êä´Ó MSB Î»¿ªÊ¼
-    spi.SPI_CRCPolynomial = 7; //CRC Öµ¼ÆËãµÄ¶àÏîÊ½
-    spi.SPI_DataSize = SPI_DataSize_8b; // SPI ·¢ËÍ½ÓÊÕ8bitÊı¾İ
+    spi.SPI_Direction = SPI_Direction_2Lines_FullDuplex; //åŒçº¿åŒå‘å…¨åŒå·¥
+    spi.SPI_FirstBit = SPI_FirstBit_MSB; //æ•°æ®ä¼ è¾“ä» MSB ä½å¼€å§‹
+    spi.SPI_CRCPolynomial = 7; 
+    spi.SPI_DataSize = SPI_DataSize_8b; // SPI å‘é€æ¥æ”¶8ä½å¸§ç»“æ„
     SPI_Init(SPI2, &spi);
     
 }
